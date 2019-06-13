@@ -413,7 +413,7 @@ public class Nave {
 	@POST
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Response updateNaveHeheheeee(ONave nave) {
+	public Response updateNaveHeheheeee() {
 		Response resp = NO_CONNECTION;
 Statement stmt = null;
 		
@@ -421,11 +421,11 @@ Statement stmt = null;
 			this.cntn.abrirConexion("add", "localhost", "root", "");
 			if(this.cntn.getConexion()!= null) {
 				stmt = cntn.getConexion().createStatement();
-				int dataUpdated = stmt.executeUpdate("UPDATE naves"
-						+ "SET id="+nave.getId()
-						+", nombre="+nave.getNombre()
-						+", pais="+nave.getPais()
-						+", fabricante="+nave.getFabricante());
+				int dataUpdated = stmt.executeUpdate("INSERT INTO naves(id,nombre,pais,fabricant) VALUES(default," 
+													+nave.getId()
+													+","+nave.getNombre()
+													+","+nave.getPais()
+													+","+nave.getFabricante());
 				
 				if(dataUpdated==0) {
 					resp = Response

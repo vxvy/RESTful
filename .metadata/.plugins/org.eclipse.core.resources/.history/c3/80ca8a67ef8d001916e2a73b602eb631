@@ -422,10 +422,8 @@ Statement stmt = null;
 			if(this.cntn.getConexion()!= null) {
 				stmt = cntn.getConexion().createStatement();
 				int dataUpdated = stmt.executeUpdate("UPDATE naves"
-						+ "SET id="+nave.getId()
-						+", nombre="+nave.getNombre()
-						+", pais="+nave.getPais()
-						+", fabricante="+nave.getFabricante());
+						+ "SET "
+						+ "");
 				
 				if(dataUpdated==0) {
 					resp = Response

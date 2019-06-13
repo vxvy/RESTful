@@ -409,58 +409,6 @@ public class Nave {
 	
 	//17.Método que nos permita actualizar una nave.
 	
-	@Path("/updateship")
-	@POST
-	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Response updateNaveHeheheeee(ONave nave) {
-		Response resp = NO_CONNECTION;
-Statement stmt = null;
-		
-		try {
-			this.cntn.abrirConexion("add", "localhost", "root", "");
-			if(this.cntn.getConexion()!= null) {
-				stmt = cntn.getConexion().createStatement();
-				int dataUpdated = stmt.executeUpdate("UPDATE naves"
-						+ "SET id="+nave.getId()
-						+", nombre="+nave.getNombre()
-						+", pais="+nave.getPais()
-						+", fabricante="+nave.getFabricante());
-				
-				if(dataUpdated==0) {
-					resp = Response
-							.status(Status.BAD_REQUEST)
-							.entity("UPDATE failed")
-							.type(MediaType.TEXT_PLAIN)
-							.build();
-				}else {
-					resp = Response.status(Status.ACCEPTED)
-							.entity("UPDATE successful")
-							.type(MediaType.TEXT_PLAIN)
-							.build();
-				}
-			}
-		}catch(SQLException sqle) {
-			sqle.printStackTrace();
-			resp = QUERY_ERROR;
-		}finally {
-			if(stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(cntn.getConexion() != null) {
-				try {
-					cntn.cerrarConexion();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return resp;
-	}
 	
 	//18.Método que nos permia insertar una nave.
 	//INSERT INTO naves(id,nombre,pais,fabricante) VALUES(default,"paAmbTumaquet","catalunya","mueblesPepito");
@@ -486,34 +434,17 @@ Statement stmt = null;
 				if(dataUpdated==0) {
 					resp = Response
 							.status(Status.BAD_REQUEST)
-							.entity("INSERT failed")
+							.entity("INSET failed")
 							.type(MediaType.TEXT_PLAIN)
 							.build();
 				}else {
-					resp = Response.status(Status.ACCEPTED)
-							.entity("INSERT successful")
-							.type(MediaType.TEXT_PLAIN)
-							.build();
+					resp = ;
 				}
+				
+				
 			}
 		}catch(SQLException sqle) {
 			sqle.printStackTrace();
-			resp = QUERY_ERROR;
-		}finally {
-			if(stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(cntn.getConexion() != null) {
-				try {
-					cntn.cerrarConexion();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		
 		return resp;

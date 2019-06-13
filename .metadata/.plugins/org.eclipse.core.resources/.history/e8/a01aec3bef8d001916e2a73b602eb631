@@ -17,10 +17,6 @@ public class ONave {
 	int potencia;
 	String estado;
 	
-	public ONave() {
-		
-	}
-	
 	public ONave(int id, String nombre, String pais, String fabricante, String sistemaLanzamiento, double longitud, int masaSeco,
 			int masaLanzamiento, int cargaUtil, double volumenUtil, int cargaUtilRetorno, double diametro, int potencia,
 			String estado) {

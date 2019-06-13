@@ -421,11 +421,7 @@ Statement stmt = null;
 			this.cntn.abrirConexion("add", "localhost", "root", "");
 			if(this.cntn.getConexion()!= null) {
 				stmt = cntn.getConexion().createStatement();
-				int dataUpdated = stmt.executeUpdate("UPDATE naves"
-						+ "SET id="+nave.getId()
-						+", nombre="+nave.getNombre()
-						+", pais="+nave.getPais()
-						+", fabricante="+nave.getFabricante());
+				int dataUpdated = stmt.executeUpdate("");
 				
 				if(dataUpdated==0) {
 					resp = Response

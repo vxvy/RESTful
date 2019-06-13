@@ -123,7 +123,6 @@ public class Deportista {
 		return resp;
 	}
 	
-	//
 	
 	//Extrae los datos de deportistas de la base de datos 
 	//en forma de deportista

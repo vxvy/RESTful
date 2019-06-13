@@ -1,0 +1,118 @@
+package paqueteNaves;
+
+public class ONave {
+	
+	int id;
+	String nombre;
+	String pais;
+	String fabricante;
+	String sistemaLanzamiento;
+	double longitud;
+	int masaSeco;
+	int masaLanzamiento;
+	int cargaUtil;
+	double volumenUtil;
+	int cargaUtilRetorno;
+	double diametro;
+	int potencia;
+	String estado;
+	
+	public ONave(int id, String pais, String fabricante, String sistemaLanzamiento, double longitud, int masaSeco,
+			int masaLanzamiento, int cargaUtil, double volumenUtil, int cargaUtilRetorno, double diametro, int potencia,
+			String estado) {
+		super();
+		this.id = id;
+		this.pais = pais;
+		this.fabricante = fabricante;
+		this.sistemaLanzamiento = sistemaLanzamiento;
+		this.longitud = longitud;
+		this.masaSeco = masaSeco;
+		this.masaLanzamiento = masaLanzamiento;
+		this.cargaUtil = cargaUtil;
+		this.volumenUtil = volumenUtil;
+		this.cargaUtilRetorno = cargaUtilRetorno;
+		this.diametro = diametro;
+		this.potencia = potencia;
+		this.estado = estado;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getPais() {
+		return pais;
+	}
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	public String getFabricante() {
+		return fabricante;
+	}
+	public void setFabricante(String fabricante) {
+		this.fabricante = fabricante;
+	}
+	public String getSistemaLanzamiento() {
+		return sistemaLanzamiento;
+	}
+	public void setSistemaLanzamiento(String sistemaLanzamiento) {
+		this.sistemaLanzamiento = sistemaLanzamiento;
+	}
+	public double getLongitud() {
+		return longitud;
+	}
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
+	}
+	public int getMasaSeco() {
+		return masaSeco;
+	}
+	public void setMasaSeco(int masaSeco) {
+		this.masaSeco = masaSeco;
+	}
+	public int getMasaLanzamiento() {
+		return masaLanzamiento;
+	}
+	public void setMasaLanzamiento(int masaLanzamiento) {
+		this.masaLanzamiento = masaLanzamiento;
+	}
+	public int getCargaUtil() {
+		return cargaUtil;
+	}
+	public void setCargaUtil(int cargaUtil) {
+		this.cargaUtil = cargaUtil;
+	}
+	public double getVolumenUtil() {
+		return volumenUtil;
+	}
+	public void setVolumenUtil(double volumenUtil) {
+		this.volumenUtil = volumenUtil;
+	}
+	public int getCargaUtilRetorno() {
+		return cargaUtilRetorno;
+	}
+	public void setCargaUtilRetorno(int cargaUtilRetorno) {
+		this.cargaUtilRetorno = cargaUtilRetorno;
+	}
+	public double getDiametro() {
+		return diametro;
+	}
+	public void setDiametro(double diametro) {
+		this.diametro = diametro;
+	}
+	public int getPotencia() {
+		return potencia;
+	}
+	public void setPotencia(int potencia) {
+		this.potencia = potencia;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
+
+}

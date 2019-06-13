@@ -3,6 +3,7 @@ package paqueteNaves;
 public class ONave {
 	
 	int id;
+	String nombre;
 	String pais;
 	String fabricante;
 	String sistemaLanzamiento;
@@ -16,11 +17,12 @@ public class ONave {
 	int potencia;
 	String estado;
 	
-	public ONave(int id, String pais, String fabricante, String sistemaLanzamiento, double longitud, int masaSeco,
+	public ONave(int id, String nombre, String pais, String fabricante, String sistemaLanzamiento, double longitud, int masaSeco,
 			int masaLanzamiento, int cargaUtil, double volumenUtil, int cargaUtilRetorno, double diametro, int potencia,
 			String estado) {
 		super();
 		this.id = id;
+		this.nombre = nombre;
 		this.pais = pais;
 		this.fabricante = fabricante;
 		this.sistemaLanzamiento = sistemaLanzamiento;
@@ -39,6 +41,12 @@ public class ONave {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getNombre() {
+		return this.nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	public String getPais() {
 		return pais;

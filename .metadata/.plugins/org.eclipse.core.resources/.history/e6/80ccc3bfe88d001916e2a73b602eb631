@@ -1,0 +1,418 @@
+package paqueteNaves;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import javax.management.ObjectName;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+@Path("/naves")
+public class Nave {
+	
+	Conexion cntn = new Conexion();
+	Response NO_CONTENT =
+			Response.status(Status.BAD_REQUEST)
+			.entity("No se han encontrado datos")
+			.type(MediaType.TEXT_PLAIN)
+			.build();
+	Response NO_CONNECTION = 
+			Response.status(Status.BAD_REQUEST)
+			.entity("")
+			.type(MediaType.TEXT_PLAIN)
+			.build();
+	Response QUERY_ERROR = 
+			Response.status(Status.BAD_REQUEST)
+			.entity("La consulta es incorrecta")
+			.type(MediaType.TEXT_PLAIN)
+			.build();
+	
+	
+		//10.Crea un método que visualice 
+		//todos los datos de la tabla naves.
+	
+	@GET
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response muestraTodo() {
+
+		Response resp = NO_CONNECTION;
+		ArrayList<ONave> arrLNaves = new ArrayList<ONave>();
+		
+		try {
+			this.cntn.abrirConexion("add", "localhost", "root", "");
+			if(this.cntn.getConexion()!=null) {
+				Statement stmt = this.cntn.getConexion().createStatement();
+				ResultSet rsNaves = stmt.executeQuery("SELECT * FROM naves");
+				
+				while(rsNaves.next()) {
+					arrLNaves.add( new ONave(
+						rsNaves.getInt("id"), 
+						rsNaves.getString("pais"), 
+						rsNaves.getString("fabricante"), 
+						rsNaves.getString("sistemaLanzamiento"), 
+						rsNaves.getDouble("longitud"), 
+						rsNaves.getInt("masaSeco"),
+						rsNaves.getInt("masaLanzamiento"), 
+						rsNaves.getInt("cargaUtil"), 
+						rsNaves.getDouble("volumenUtil"), 
+						rsNaves.getInt("cargaUtilRetorno"), 
+						rsNaves.getDouble("diametro"), 
+						rsNaves.getInt("potencia"),
+						rsNaves.getString("estado")));
+				}
+				
+				if(arrLNaves.size()==1) {
+					resp = Response.ok(arrLNaves.get(0)).build();
+				}else if(arrLNaves.size()<1){
+					resp = NO_CONTENT;
+				}else {
+					resp = Response.ok(
+							new GenericEntity<ArrayList<ONave>>(arrLNaves){})
+							.build();
+				}
+			}
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+			resp = QUERY_ERROR;
+		}finally {
+			if(this.cntn.getConexion()!=null) {
+				this.cntn.cerrarConexion();	
+			}
+		}
+		return resp;
+	}
+	
+	//11.Método nave que el en el path {nave} muestre información de una nave en particular (enfunción de su id).
+	
+	@Path("/{naveid}")
+	@GET
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	public Response muestraNave(@PathParam("{naveid}")String naveid) {
+		Response resp = NO_CONNECTION;
+		this.cntn.abrirConexion("add", "localhost", "root", "");
+		ONave naveEncontrada = null;
+		try {
+			if(this.cntn.getConexion() != null) {
+				Statement stmt = this.cntn.getConexion().createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM naves WHERE id="+Integer.parseInt(naveid)+";");
+				while(rs.next()) {
+					naveEncontrada = new ONave(
+							rs.getInt("id"), 
+							rs.getString("pais"), 
+							rs.getString("fabricante"), 
+							rs.getString("sistemaLanzamiento"), 
+							rs.getDouble("longitud"), 
+							rs.getInt("masaSeco"),
+							rs.getInt("masaLanzamiento"), 
+							rs.getInt("cargaUtil"), 
+							rs.getDouble("volumenUtil"), 
+							rs.getInt("cargaUtilRetorno"), 
+							rs.getDouble("diametro"), 
+							rs.getInt("potencia"),
+							rs.getString("estado")
+					);
+					
+				}
+				System.out.println("-------------------------------------------------"+Integer.parseInt(naveid));
+				if(naveEncontrada != null) {
+					resp = Response.ok(naveEncontrada).build();
+				}else {
+					resp = NO_CONTENT;
+				}
+			}
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+			resp = QUERY_ERROR;
+		}finally {
+			if(this.cntn.getConexion()!=null) {
+				this.cntn.cerrarConexion();
+			}
+		}
+		return resp;
+	}
+	
+	//12.Método países, bajo el path países, que muestre las naves pertenecen a un país.
+	
+	@Path("/paises/{pais}")
+	@GET 
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	public void navesPais(@PathParam("{pais}")String pais) {
+		Response resp = NO_CONNECTION;
+		ArrayList<ONave> arrLNaves = new ArrayList<ONave>();
+		this.cntn.abrirConexion("add", "localhost", "root", "");
+		try {
+			if(this.cntn.getConexion()!= null) {
+				Statement stmt = this.cntn.getConexion().createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM naves WHERE pais='"+pais+"';");
+				
+				while(rs.next()) {
+					arrLNaves.add( new ONave(
+							rs.getInt("id"), 
+							rs.getString("pais"), 
+							rs.getString("fabricante"), 
+							rs.getString("sistemaLanzamiento"), 
+							rs.getDouble("longitud"), 
+							rs.getInt("masaSeco"),
+							rs.getInt("masaLanzamiento"), 
+							rs.getInt("cargaUtil"), 
+							rs.getDouble("volumenUtil"), 
+							rs.getInt("cargaUtilRetorno"), 
+							rs.getDouble("diametro"), 
+							rs.getInt("potencia"),
+							rs.getString("estado")
+					));
+				}
+				
+				if(arrLNaves.size()==1) {
+					resp = Response.ok(arrLNaves.get(0)).build();
+				}else if(arrLNaves.size()<1) {
+					resp = NO_CONTENT; 
+				}else {
+					resp = Response.ok(new GenericEntity<ArrayList<ONave>>(arrLNaves){}).build();
+				}
+			}
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+			resp = QUERY_ERROR;
+		}finally {
+			if(this.cntn.getConexion()!= null) {
+				this.cntn.cerrarConexion();
+			}
+		}
+	}
+	
+	//13.Método estado que nos devuelve un una estructura de datos 
+	//	para representar las naves agrupadas por su estado. 
+	//	Hay que tener en cuenta que pueden no tener estado.
+	
+	@Path("/navesestado")
+	@GET
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	public Response navesPorEstado() {
+		this.cntn.abrirConexion("add", "localhost", "root", "");
+		Response resp = NO_CONNECTION;
+		ArrayList<ONave> arrlNaves = new ArrayList<ONave>();
+		
+		try {
+			if(this.cntn.getConexion()!= null) {
+				Statement stmt = this.cntn.getConexion().createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM naves GROUP BY estado;");
+				
+				while(rs.next()) {
+					arrlNaves.add(new ONave(
+							rs.getInt("id"), 
+							rs.getString("pais"), 
+							rs.getString("fabricante"), 
+							rs.getString("sistemaLanzamiento"), 
+							rs.getDouble("longitud"), 
+							rs.getInt("masaSeco"),
+							rs.getInt("masaLanzamiento"), 
+							rs.getInt("cargaUtil"), 
+							rs.getDouble("volumenUtil"), 
+							rs.getInt("cargaUtilRetorno"), 
+							rs.getDouble("diametro"), 
+							rs.getInt("potencia"),
+							rs.getString("estado")
+							));
+				}
+				if(arrlNaves.size()==1){
+					resp = Response.ok(arrlNaves.get(0)).build();
+				}else if(arrlNaves.size()>1){
+					resp = Response.ok(new GenericEntity<ArrayList<ONave>>(arrlNaves){}).build();
+				}
+				else {
+					resp = NO_CONTENT;
+				}
+			}
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+			resp = QUERY_ERROR; 
+		}finally {
+			if(this.cntn.getConexion()!= null) {
+				this.cntn.cerrarConexion();
+			}
+		}
+		return resp;
+	}
+	
+	//14.Método que nos muestre el número de naves de un país pasado como parte de la URI.
+	
+	@Path("/numnavpais/{pais}")
+	@GET
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+	public Response numnavpais(@PathParam("{pais}")String pais) {
+		this.cntn.abrirConexion("add", "localhost", "root", "");
+		Response resp = NO_CONNECTION;
+		
+		try {
+			if(this.cntn.getConexion()!=null) {
+				Statement stmt = this.cntn.getConexion().createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT DISTINCT COUNT(*) FROM naves WHERE pais = '"+pais+"'");
+				
+				ArrayList<Object> arrLCount = new ArrayList<Object>();
+				
+				while(rs.next()) {
+					arrLCount.add(rs.getString(1));
+				}
+				
+				if(arrLCount.size()<1) {
+					resp = NO_CONTENT;
+				}else{
+					resp = Response.ok(
+							new GenericEntity<ArrayList<Object>>(arrLCount){})
+							.build();
+				}
+			}
+		}catch(SQLException sqle) {
+			resp = QUERY_ERROR;
+		}finally {
+			if(this.cntn.getConexion()!=null) {
+				this.cntn.cerrarConexion();
+			}
+		}
+		return resp;
+	}
+	
+	//15.Método que nos muestre las naves de un fabricante pasado como parámetro de consulta. 
+	//Si no se especifica ninguno se han de mostrar las naves de Energia.
+	
+	@Path("/fabric/{fabricante}")
+	@GET
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response getNavesDeFabricante(@PathParam("fabricante")String fabricante) {
+		Statement stmt = null;
+		Response resp = NO_CONNECTION;
+		ArrayList<ONave> arrLNave = new ArrayList<ONave>();
+		
+		try {
+			this.cntn.abrirConexion("add", "localhost", "root", "");
+			if(this.cntn.getConexion() != null) {
+				stmt = this.cntn.getConexion().createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT * FROM naves WHERE fabricante = '"+fabricante+"';");
+				
+				while(rs.next()) {
+					arrLNave.add(new ONave(
+							rs.getInt("id"), 
+							rs.getString("pais"), 
+							rs.getString("fabricante"), 
+							rs.getString("sistemaLanzamiento"), 
+							rs.getDouble("longitud"), 
+							rs.getInt("masaSeco"),
+							rs.getInt("masaLanzamiento"), 
+							rs.getInt("cargaUtil"), 
+							rs.getDouble("volumenUtil"), 
+							rs.getInt("cargaUtilRetorno"), 
+							rs.getDouble("diametro"), 
+							rs.getInt("potencia"),
+							rs.getString("estado")
+							));
+				}
+				
+				if(arrLNave.size()<1) {
+					resp = this.getNavesDeFabricante("Energía");
+				}else if(arrLNave.size() == 1) {
+					resp = Response.ok(arrLNave.get(0)).build();
+				}else {
+					resp = Response.ok(
+							new GenericEntity<ArrayList<ONave>>(arrLNave){}).build();
+				}
+			}
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+			resp = QUERY_ERROR;
+		}finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(cntn.getConexion() != null) {
+				try {
+					cntn.cerrarConexion();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return resp;
+	}
+	
+	//16.Método que nos permita borrar una nave en función de su id.
+	
+	@Path("/borraid/{idBorra}")
+	@GET
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public Response deleteMuyHard(@PathParam("id") int id) {
+		Response resp = NO_CONNECTION;
+		Statement stmt = null;
+		
+		try {
+			this.cntn.abrirConexion("add", "loscalhost", "root", "");			
+			if(this.cntn.getConexion() != null) {
+				stmt = this.cntn.getConexion().createStatement();
+				
+				int filasBorradas = stmt.executeUpdate("DELETE FROM naves WHERE id="+id+";");
+				
+				if(filasBorradas == 0) {
+					resp = Response
+							.status(Status.BAD_REQUEST)
+							.entity("NO SE HA ENCONTRADO NADA")
+							.type(MediaType.TEXT_PLAIN)
+							.build();
+				}else {
+					resp = Response
+							.status(Status.ACCEPTED)
+							.entity("SE HA BORRADO SATISFACTORIAMENTE DE LA BASE DE DATOS")
+							.type(MediaType.TEXT_PLAIN)
+							.build();
+				}
+			}
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+			resp=QUERY_ERROR;
+		}finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(cntn.getConexion() != null) {
+				try {
+					cntn.cerrarConexion();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return resp;
+	}
+	
+	//17.Método que nos permita actualizar una nave.
+	
+	
+	//18.Método que nos permia insertar una nave.
+	//INSERT INTO naves(id,nombre,pais,fabricante) VALUES(default,"paAmbTumaquet","catalunya","mueblesPepito");
+	
+	@Path("/insetship")
+	@POST
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response insetateLaNave(ONave nave) {
+		
+	}
+	
+	
+}

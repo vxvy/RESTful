@@ -6,7 +6,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.management.ObjectName;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -55,6 +57,7 @@ public class Nave {
 				while(rsNaves.next()) {
 					arrLNaves.add( new ONave(
 						rsNaves.getInt("id"), 
+						rsNaves.getString("nombre"),
 						rsNaves.getString("pais"), 
 						rsNaves.getString("fabricante"), 
 						rsNaves.getString("sistemaLanzamiento"), 
@@ -105,7 +108,8 @@ public class Nave {
 				ResultSet rs = stmt.executeQuery("SELECT * FROM naves WHERE id="+Integer.parseInt(naveid)+";");
 				while(rs.next()) {
 					naveEncontrada = new ONave(
-							rs.getInt("id"), 
+							rs.getInt("id"),
+							rs.getString("nombre"),
 							rs.getString("pais"), 
 							rs.getString("fabricante"), 
 							rs.getString("sistemaLanzamiento"), 
@@ -156,6 +160,7 @@ public class Nave {
 				while(rs.next()) {
 					arrLNaves.add( new ONave(
 							rs.getInt("id"), 
+							rs.getString("nombre"),
 							rs.getString("pais"), 
 							rs.getString("fabricante"), 
 							rs.getString("sistemaLanzamiento"), 
@@ -209,6 +214,7 @@ public class Nave {
 				while(rs.next()) {
 					arrlNaves.add(new ONave(
 							rs.getInt("id"), 
+							rs.getString("nombre"), 
 							rs.getString("pais"), 
 							rs.getString("fabricante"), 
 							rs.getString("sistemaLanzamiento"), 
@@ -301,6 +307,7 @@ public class Nave {
 				while(rs.next()) {
 					arrLNave.add(new ONave(
 							rs.getInt("id"), 
+							rs.getString("nombre"), 
 							rs.getString("pais"), 
 							rs.getString("fabricante"), 
 							rs.getString("sistemaLanzamiento"), 
@@ -361,7 +368,7 @@ public class Nave {
 			if(this.cntn.getConexion() != null) {
 				stmt = this.cntn.getConexion().createStatement();
 				
-				int filasBorradas = stmt.executeUpdate("DELETE FROM naves WHERE id="+id+";");
+				int filasBorradas = stmt.execute("DELETE FROM naves WHERE id="+id+";");
 				
 				if(filasBorradas == 0) {
 					resp = Response
@@ -379,6 +386,7 @@ public class Nave {
 			}
 		}catch(SQLException sqle) {
 			sqle.printStackTrace();
+			resp=QUERY_ERROR;
 		}finally {
 			if(stmt != null) {
 				try {
@@ -402,7 +410,32 @@ public class Nave {
 	//17.Método que nos permita actualizar una nave.
 	
 	
-	
 	//18.Método que nos permia insertar una nave.
+	//INSERT INTO naves(id,nombre,pais,fabricante) VALUES(default,"paAmbTumaquet","catalunya","mueblesPepito");
+	
+	@Path("/insetship")
+	@POST
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response insetateLaNave(ONave nave) {
+		Response resp = NO_CONNECTION;
+//		Statement stmt = null;
+//		
+//		try {
+//			this.cntn.abrirConexion("add", "localhost", "root", "");
+//			if(this.cntn.getConexion()!= null) {
+//				stmt = cntn.getConexion().createStatement();
+//				int dataUpdated = stmt.executeQuery("INSERT INTO naves("
+//													+nave.getId()+","+nave.getNombre()+",pais,fabricante) VALUES(default,\"paAmbTumaquet\",\"catalunya\",\"mueblesPepito\");");
+//				
+//				
+//			}
+//		}catch(SQLException sqle) {
+//			sqle.printStackTrace();
+//		}
+//		
+		return resp;
+	}
+	
 	
 }

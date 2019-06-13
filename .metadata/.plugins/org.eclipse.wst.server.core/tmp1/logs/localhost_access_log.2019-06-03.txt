@@ -1,0 +1,4 @@
+127.0.0.1 - - [03/Jun/2019:12:46:50 +0200] "GET / HTTP/1.1" 404 1004
+0:0:0:0:0:0:0:1 - - [03/Jun/2019:12:46:50 +0200] "GET /ProyectoNaves/rest/naves/navesestado HTTP/1.1" 400 -
+0:0:0:0:0:0:0:1 - - [03/Jun/2019:13:15:07 +0200] "GET /ProyectoNaves/rest/naves/navesestado HTTP/1.1" 400 26
+0:0:0:0:0:0:0:1 - - [03/Jun/2019:13:31:50 +0200] "GET /ProyectoNaves/rest/naves/navesestado HTTP/1.1" 200 898

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;coche&apos; in &apos;dwp2.Cars.getCar(...)&apos; to &apos;car&apos;&#x0D;&#x0A;- Original project: &apos;dwp2&apos;&#x0D;&#x0A;- Original element: &apos;dwp2.Cars.getCar(Car).coche&apos;&#x0D;&#x0A;- Renamed element: &apos;coche&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;coche&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;dwp2{Cars.java[Cars~getCar~QCar;@coche!381!389!385!389!QCar;!0!true" name="car" references="true" stamp="1548868537628" version="1.0"/>
+</session>

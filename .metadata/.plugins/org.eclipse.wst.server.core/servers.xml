@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Tomcat v8.0 Server at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Tomcat v8.0 Server at localhost" name="Tomcat v8.0 Server at localhost" runtime-id="Apache Tomcat v8.0 (3)" server-type="org.eclipse.jst.server.tomcat.80" server-type-id="org.eclipse.jst.server.tomcat.80" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="4">
+    <list key="modules" value0="dwp2::org.eclipse.jst.jee.server:dwp2::jst.web::3.1" value1="PT::org.eclipse.jst.jee.server:PT::jst.web::3.0" value2="Proyecto::org.eclipse.jst.jee.server:Proyecto::jst.web::3.1"/>
+  </server>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Tomcat v8.0 Server at localhost (2)-config" deployDir="wtpwebapps" hostname="localhost" id="Tomcat v8.0 Server at localhost (2)" name="Tomcat v8.0 Server at localhost (2)" runtime-id="Apache Tomcat v8.0 (2)" server-type="org.eclipse.jst.server.tomcat.80" server-type-id="org.eclipse.jst.server.tomcat.80" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="4">
+    <list key="modules" value0="Proyecto::org.eclipse.jst.jee.server:Proyecto::jst.web::3.1" value1="ProyectoD::org.eclipse.jst.jee.server:ProyectoD::jst.web::3.1" value2="ProyectoNaves::org.eclipse.jst.jee.server:ProyectoNaves::jst.web::3.1"/>
+  </server>
+</servers>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;T5WebProtocol&apos; to &apos;T5WebRESTFul&apos;" description="Rename resource &apos;T5WebProtocol&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/T5WebProtocol" name="T5WebRESTFul" stamp="1549008409429" updateReferences="true"/>
+</session>

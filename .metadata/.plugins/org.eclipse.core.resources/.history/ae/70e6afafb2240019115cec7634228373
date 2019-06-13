@@ -1,0 +1,27 @@
+package dwp2;
+
+import javax.ws.rs.Path;
+
+@Path("/coches")
+public class Cars {
+	static ArrayList<Car> coches = new ArrayList<Car>();
+	@DefaultValue("valor por defecto") 
+	@QueryParam("valor") String text;
+	@POST
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCar(Car coche) {
+		this.coches.add(coche);
+		return Response.ok(coche).build();
+	}
+@GET
+@Produces
+({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public ArrayList<Car> getXML() {
+		Car c = new Car();
+		c.setMarca("Ford");
+		c.setModelo("Focus");
+		this.coches.add(c);
+		return this.coches;
+	}
+}
